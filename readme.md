@@ -5,7 +5,6 @@ Alpha-Audit is a local pipeline designed to transform static trading journals (P
 ## 🚀 Features
 - **PDF Extraction:** Automated parsing of trade logs into structured JSON.
 - **Cognitive Analysis:** Uses OpenRouter (Llama 3/3.3) to audit trade execution against planned setups.
-- **Pi-Ready:** Lightweight architecture optimized for Raspberry Pi or Ubuntu 22.04 environments.
 
 ## 🛠️ Prerequisites
 - **OS:** Ubuntu 22.04 

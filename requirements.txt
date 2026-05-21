@@ -8,3 +8,4 @@ pandas
 jupyterlab
 httpx
 streamlit
+python-multipart
