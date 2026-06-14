@@ -9,9 +9,13 @@ from __future__ import annotations
 import html
 import json
 import shutil
+import sys
 import uuid
 from pathlib import Path
 from typing import Any, Dict, List, Optional
+
+PROJECT_DIR = Path(__file__).resolve().parents[1]
+sys.path.insert(0, str(PROJECT_DIR))
 
 from fastapi import FastAPI, File, Form, HTTPException, UploadFile
 from fastapi.responses import FileResponse, HTMLResponse
@@ -290,15 +294,15 @@ async def analyze(
 
     run_id = uuid.uuid4().hex[:12]
     run_dir = RUNS_DIR / run_id
-  safe_name = Path(pdf_file.filename).name
-  upload_path = run_dir / "input" / safe_name
+    safe_name = Path(pdf_file.filename).name
+    upload_path = run_dir / "input" / safe_name
     _save_upload(pdf_file, upload_path)
 
     try:
-    extracted_path = Path(extract_pdf(str(upload_path), output_dir=run_dir / "processed"))
-    processed_path = run_dir / "processed" / f"{run_id}.json"
-    processed_path.parent.mkdir(parents=True, exist_ok=True)
-    shutil.copy2(extracted_path, processed_path)
+        extracted_path = Path(extract_pdf(str(upload_path), output_dir=run_dir / "processed"))
+        processed_path = run_dir / "processed" / f"{run_id}.json"
+        processed_path.parent.mkdir(parents=True, exist_ok=True)
+        shutil.copy2(extracted_path, processed_path)
         organized_path = Path(organize(processed_path, output_path=run_dir / "organized" / f"{run_id}_organized.json"))
         analysis_path = Path(
             analyze_organized_file(
